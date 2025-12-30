@@ -36,5 +36,7 @@ public class Student {
     @Temporal(TemporalType.TIMESTAMP)
     @UpdateTimestamp
     private Date updatedAt;
-
+    //mappedBy la inverse
+    @OneToOne(mappedBy="student")
+    private User user;
 }

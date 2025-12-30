@@ -27,14 +27,17 @@ public class User {
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt;
     @CreationTimestamp
-    @Column(name = "created_at", nullable = false, updatable = false)
+    @Column(name = "update_at", nullable = false, updatable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date updatedAt;
     @ManyToMany
     @JoinTable(
             name="user_roles",
-            joinColumns= @JoinColumn(name="user_id"),
-            inverseJoinColumns = @JoinColumn(name="role_id")
+            joinColumns=@JoinColumn(name="user_id"),
+            inverseJoinColumns=@JoinColumn(name="role_id")
     )
     private Set<Role> roles = new HashSet<>();
+    @OneToOne
+    @JoinColumn(name="student_id")
+    private Student student;
 }
