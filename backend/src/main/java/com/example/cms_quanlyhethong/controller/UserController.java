@@ -15,7 +15,7 @@ public class UserController {
     @Autowired
     private UserRepository userRepository;
     // lay tat ca user
-    @GetMapping
+    @GetMapping // nhan request
     public List<User> getAllUsers() {
         return userRepository.findAll();
     }

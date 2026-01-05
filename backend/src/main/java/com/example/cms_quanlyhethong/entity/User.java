@@ -1,5 +1,9 @@
 package com.example.cms_quanlyhethong.entity;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.util.Date;
@@ -8,13 +12,17 @@ import java.util.Set;
 
 @Entity
 @Table(name="users")
+@Data  // Tự động tạo getter/setter, toString, equals, hashCode
+@NoArgsConstructor  // Constructor không tham số
+@AllArgsConstructor  // Constructor với tất cả tham số
 public class User {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private long id;
     @Column(name="username",length=255,unique=false,nullable=true)
     private String username;
-    @Column(name = "password", nullable = false, length = 255)
+    @Column(name = "password",unique =true, nullable = false, length = 255)
+    @JsonIgnore
     private String password;
     @Column(name = "email", unique = true, nullable = false, length = 100)
     private String email;
@@ -36,8 +44,10 @@ public class User {
             joinColumns=@JoinColumn(name="user_id"),
             inverseJoinColumns=@JoinColumn(name="role_id")
     )
+    @JsonIgnore
     private Set<Role> roles = new HashSet<>();
     @OneToOne
     @JoinColumn(name="student_id")
+    @JsonIgnore
     private Student student;
 }
