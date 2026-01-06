@@ -6,8 +6,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.web.SecurityFilterChain;
 
-import static org.springframework.security.config.Customizer.withDefaults;
-
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
@@ -15,11 +13,12 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .csrf(csrf -> csrf.disable()) // tat token csrf
+                .csrf(csrf -> csrf.disable()) // Tắt CSRF
                 .authorizeHttpRequests(auth -> auth
-                        .anyRequest().permitAll() // cho phep toan bo request di qua
+                        .requestMatchers("/api/auth/**").permitAll() // ← THÊM DÒNG NÀY: Cho phép /api/auth/** không cần xác thực
+                        .anyRequest().permitAll() // Cho phép tất cả request khác
                 )
-                .httpBasic(withDefaults());
+                .httpBasic(basic -> basic.disable()); // ← THÊM DÒNG NÀY: Tắt HTTP Basic Auth
 
         return http.build();
     }

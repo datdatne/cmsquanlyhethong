@@ -1,9 +1,7 @@
 package com.example.cms_quanlyhethong.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.util.Date;
@@ -12,7 +10,8 @@ import java.util.Set;
 
 @Entity
 @Table(name="users")
-@Data  // Tự động tạo getter/setter, toString, equals, hashCode
+@Getter
+@Setter // Tự động tạo getter/setter, toString, equals, hashCode
 @NoArgsConstructor  // Constructor không tham số
 @AllArgsConstructor  // Constructor với tất cả tham số
 public class User {
