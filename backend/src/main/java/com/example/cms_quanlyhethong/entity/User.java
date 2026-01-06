@@ -38,7 +38,7 @@ public class User {
     @Column(name = "update_at", nullable = false, updatable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date updatedAt;
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name="user_roles",
             joinColumns=@JoinColumn(name="user_id"),

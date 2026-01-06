@@ -1,11 +1,16 @@
 package com.example.cms_quanlyhethong.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
-
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity()
 @Table(name="roles")
 public class Role {
