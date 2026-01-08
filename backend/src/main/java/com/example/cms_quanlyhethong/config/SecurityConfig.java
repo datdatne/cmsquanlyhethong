@@ -25,7 +25,6 @@ public class SecurityConfig {
                 .sessionManagement(session -> session .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 // Khong dung Session
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/auth/**").permitAll() // ← THÊM DÒNG NÀY: Cho phép /api/auth/** không cần xác thực
                         .anyRequest().permitAll() // Cho phép tất cả request khác
                 )
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class) // ← THÊM: Thêm filter

@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
     private JwtUntil jwtUntil;
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain filterChain)
         throws ServletException, IOException {
-        HttpServletRequest httpRequest = (HttpServletRequest) request;   // ← THÊM dòng này
+        HttpServletRequest httpRequest = (HttpServletRequest) request;   //cast servletrequest thanh httpservletrequest
         HttpServletResponse httpResponse = (HttpServletResponse) response;
         // lay token Header tu "Authozation"
         String authHeader = httpRequest.getHeader("Authorization");

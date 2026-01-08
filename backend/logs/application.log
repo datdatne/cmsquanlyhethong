@@ -1,16 +1,16 @@
-2026-01-07T16:23:14.834+07:00  INFO 4912 --- [main] c.e.c.CmsQuanlyhethongApplicationTests   : Starting CmsQuanlyhethongApplicationTests using Java 21.0.8 with PID 4912 (started by Admin in C:\Users\Admin\Downloads\cms-quanlyhethong\backend)
-2026-01-07T16:23:14.839+07:00  INFO 4912 --- [main] c.e.c.CmsQuanlyhethongApplicationTests   : No active profile set, falling back to 1 default profile: "default"
-2026-01-07T16:23:15.483+07:00  INFO 4912 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2026-01-07T16:23:15.540+07:00  INFO 4912 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 49 ms. Found 3 JPA repository interfaces.
-2026-01-07T16:23:15.929+07:00  INFO 4912 --- [main] org.hibernate.orm.jpa                    : HHH008540: Processing PersistenceUnitInfo [name: default]
-2026-01-07T16:23:15.993+07:00  INFO 4912 --- [main] org.hibernate.orm.core                   : HHH000001: Hibernate ORM core version 7.2.0.Final
-2026-01-07T16:23:16.473+07:00  INFO 4912 --- [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
-2026-01-07T16:23:16.518+07:00  INFO 4912 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
-2026-01-07T16:23:17.664+07:00  WARN 4912 --- [main] org.hibernate.orm.jdbc.error             : HHH000247: ErrorCode: 0, SQLState: 08S01
-2026-01-07T16:23:17.665+07:00  WARN 4912 --- [main] org.hibernate.orm.jdbc.error             : Communications link failure
+2026-01-08T16:16:00.719+07:00  INFO 20220 --- [main] c.e.c.CmsQuanlyhethongApplicationTests   : Starting CmsQuanlyhethongApplicationTests using Java 21.0.8 with PID 20220 (started by Admin in C:\Users\Admin\Downloads\cms-quanlyhethong\backend)
+2026-01-08T16:16:00.729+07:00  INFO 20220 --- [main] c.e.c.CmsQuanlyhethongApplicationTests   : No active profile set, falling back to 1 default profile: "default"
+2026-01-08T16:16:01.383+07:00  INFO 20220 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-01-08T16:16:01.446+07:00  INFO 20220 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 56 ms. Found 3 JPA repository interfaces.
+2026-01-08T16:16:02.046+07:00  INFO 20220 --- [main] org.hibernate.orm.jpa                    : HHH008540: Processing PersistenceUnitInfo [name: default]
+2026-01-08T16:16:02.125+07:00  INFO 20220 --- [main] org.hibernate.orm.core                   : HHH000001: Hibernate ORM core version 7.2.0.Final
+2026-01-08T16:16:02.650+07:00  INFO 20220 --- [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-01-08T16:16:02.683+07:00  INFO 20220 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-01-08T16:16:03.824+07:00  WARN 20220 --- [main] org.hibernate.orm.jdbc.error             : HHH000247: ErrorCode: 0, SQLState: 08S01
+2026-01-08T16:16:03.824+07:00  WARN 20220 --- [main] org.hibernate.orm.jdbc.error             : Communications link failure
 
 The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
-2026-01-07T16:23:17.666+07:00  WARN 4912 --- [main] org.hibernate.orm.jdbc                   : HHH100046: Could not obtain connection to query JDBC database metadata
+2026-01-08T16:16:03.838+07:00  WARN 20220 --- [main] org.hibernate.orm.jdbc                   : HHH100046: Could not obtain connection to query JDBC database metadata
 
 org.hibernate.exception.JDBCConnectionException: Unable to obtain isolated JDBC connection [Communications link failure
 
@@ -194,8 +194,8 @@ Caused by: java.net.ConnectException: Connection refused: getsockopt
 	at com.mysql.cj.protocol.a.NativeSocketConnection.connect(NativeSocketConnection.java:53) ~[mysql-connector-j-9.5.0.jar:9.5.0]
 	... 144 common frames omitted
 
-2026-01-07T16:23:17.702+07:00  WARN 4912 --- [main] org.hibernate.orm.deprecation            : HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
-2026-01-07T16:23:17.712+07:00  INFO 4912 --- [main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+2026-01-08T16:16:03.872+07:00  WARN 20220 --- [main] org.hibernate.orm.deprecation            : HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-01-08T16:16:03.872+07:00  INFO 20220 --- [main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
 	Database JDBC URL [undefined/unknown]
 	Database driver: undefined/unknown
 	Database dialect: MySQLDialect
@@ -207,28 +207,28 @@ Caused by: java.net.ConnectException: Connection refused: getsockopt
 	Pool: DataSourceConnectionProvider
 	Minimum pool size: undefined/unknown
 	Maximum pool size: undefined/unknown
-2026-01-07T16:23:17.814+07:00  WARN 4912 --- [main] org.hibernate.orm.deprecation            : HHH90000033: Encountered use of deprecated annotation [interface jakarta.persistence.Temporal] at com.example.cms_quanlyhethong.entity.Role.createdAt.
-2026-01-07T16:23:17.832+07:00  WARN 4912 --- [main] org.hibernate.orm.deprecation            : HHH90000033: Encountered use of deprecated annotation [interface jakarta.persistence.Temporal] at com.example.cms_quanlyhethong.entity.Student.createdAt.
-2026-01-07T16:23:17.834+07:00  WARN 4912 --- [main] org.hibernate.orm.deprecation            : HHH90000033: Encountered use of deprecated annotation [interface jakarta.persistence.Temporal] at com.example.cms_quanlyhethong.entity.Student.dateofbirth.
-2026-01-07T16:23:17.834+07:00  WARN 4912 --- [main] org.hibernate.orm.deprecation            : HHH90000033: Encountered use of deprecated annotation [interface jakarta.persistence.Temporal] at com.example.cms_quanlyhethong.entity.Student.updatedAt.
-2026-01-07T16:23:17.842+07:00  WARN 4912 --- [main] org.hibernate.orm.deprecation            : HHH90000033: Encountered use of deprecated annotation [interface jakarta.persistence.Temporal] at com.example.cms_quanlyhethong.entity.User.createdAt.
-2026-01-07T16:23:17.845+07:00  WARN 4912 --- [main] org.hibernate.orm.deprecation            : HHH90000033: Encountered use of deprecated annotation [interface jakarta.persistence.Temporal] at com.example.cms_quanlyhethong.entity.User.updatedAt.
-2026-01-07T16:23:18.630+07:00  INFO 4912 --- [main] org.hibernate.orm.core                   : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
-2026-01-07T16:23:18.654+07:00  INFO 4912 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
-2026-01-07T16:23:19.702+07:00  WARN 4912 --- [main] org.hibernate.orm.jdbc.error             : HHH000247: ErrorCode: 0, SQLState: 08S01
-2026-01-07T16:23:19.703+07:00  WARN 4912 --- [main] org.hibernate.orm.jdbc.error             : Communications link failure
+2026-01-08T16:16:03.996+07:00  WARN 20220 --- [main] org.hibernate.orm.deprecation            : HHH90000033: Encountered use of deprecated annotation [interface jakarta.persistence.Temporal] at com.example.cms_quanlyhethong.entity.Role.createdAt.
+2026-01-08T16:16:04.012+07:00  WARN 20220 --- [main] org.hibernate.orm.deprecation            : HHH90000033: Encountered use of deprecated annotation [interface jakarta.persistence.Temporal] at com.example.cms_quanlyhethong.entity.Student.createdAt.
+2026-01-08T16:16:04.012+07:00  WARN 20220 --- [main] org.hibernate.orm.deprecation            : HHH90000033: Encountered use of deprecated annotation [interface jakarta.persistence.Temporal] at com.example.cms_quanlyhethong.entity.Student.dateofbirth.
+2026-01-08T16:16:04.012+07:00  WARN 20220 --- [main] org.hibernate.orm.deprecation            : HHH90000033: Encountered use of deprecated annotation [interface jakarta.persistence.Temporal] at com.example.cms_quanlyhethong.entity.Student.updatedAt.
+2026-01-08T16:16:04.032+07:00  WARN 20220 --- [main] org.hibernate.orm.deprecation            : HHH90000033: Encountered use of deprecated annotation [interface jakarta.persistence.Temporal] at com.example.cms_quanlyhethong.entity.User.createdAt.
+2026-01-08T16:16:04.036+07:00  WARN 20220 --- [main] org.hibernate.orm.deprecation            : HHH90000033: Encountered use of deprecated annotation [interface jakarta.persistence.Temporal] at com.example.cms_quanlyhethong.entity.User.updatedAt.
+2026-01-08T16:16:04.926+07:00  INFO 20220 --- [main] org.hibernate.orm.core                   : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-01-08T16:16:04.961+07:00  INFO 20220 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-01-08T16:16:05.967+07:00  WARN 20220 --- [main] org.hibernate.orm.jdbc.error             : HHH000247: ErrorCode: 0, SQLState: 08S01
+2026-01-08T16:16:05.969+07:00  WARN 20220 --- [main] org.hibernate.orm.jdbc.error             : Communications link failure
 
 The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
-2026-01-07T16:23:19.707+07:00 ERROR 4912 --- [main] j.LocalContainerEntityManagerFactoryBean : Failed to initialize JPA EntityManagerFactory: Unable to build Hibernate SessionFactory  [persistence unit: default] ; nested exception is org.hibernate.exception.JDBCConnectionException: Unable to open JDBC Connection for DDL execution [Communications link failure
+2026-01-08T16:16:05.974+07:00 ERROR 20220 --- [main] j.LocalContainerEntityManagerFactoryBean : Failed to initialize JPA EntityManagerFactory: Unable to build Hibernate SessionFactory  [persistence unit: default] ; nested exception is org.hibernate.exception.JDBCConnectionException: Unable to open JDBC Connection for DDL execution [Communications link failure
 
 The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.] [n/a]
-2026-01-07T16:23:19.707+07:00  WARN 4912 --- [main] o.s.w.c.s.GenericWebApplicationContext   : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'entityManagerFactory' defined in class path resource [org/springframework/boot/hibernate/autoconfigure/HibernateJpaConfiguration.class]: Unable to build Hibernate SessionFactory  [persistence unit: default] ; nested exception is org.hibernate.exception.JDBCConnectionException: Unable to open JDBC Connection for DDL execution [Communications link failure
+2026-01-08T16:16:05.976+07:00  WARN 20220 --- [main] o.s.w.c.s.GenericWebApplicationContext   : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'entityManagerFactory' defined in class path resource [org/springframework/boot/hibernate/autoconfigure/HibernateJpaConfiguration.class]: Unable to build Hibernate SessionFactory  [persistence unit: default] ; nested exception is org.hibernate.exception.JDBCConnectionException: Unable to open JDBC Connection for DDL execution [Communications link failure
 
 The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.] [n/a]
-2026-01-07T16:23:19.720+07:00  INFO 4912 --- [main] .s.b.a.l.ConditionEvaluationReportLogger : 
+2026-01-08T16:16:06.000+07:00  INFO 20220 --- [main] .s.b.a.l.ConditionEvaluationReportLogger : 
 
 Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
-2026-01-07T16:23:19.741+07:00 ERROR 4912 --- [main] o.s.boot.SpringApplication               : Application run failed
+2026-01-08T16:16:06.025+07:00 ERROR 20220 --- [main] o.s.boot.SpringApplication               : Application run failed
 
 org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'entityManagerFactory' defined in class path resource [org/springframework/boot/hibernate/autoconfigure/HibernateJpaConfiguration.class]: Unable to build Hibernate SessionFactory  [persistence unit: default] ; nested exception is org.hibernate.exception.JDBCConnectionException: Unable to open JDBC Connection for DDL execution [Communications link failure
 
@@ -427,9 +427,9 @@ Caused by: java.net.ConnectException: Connection refused: getsockopt
 	at com.mysql.cj.protocol.a.NativeSocketConnection.connect(NativeSocketConnection.java:53) ~[mysql-connector-j-9.5.0.jar:9.5.0]
 	... 149 common frames omitted
 
-2026-01-07T16:23:19.746+07:00  WARN 4912 --- [main] o.s.test.context.TestContextManager      : Caught exception while allowing TestExecutionListener [org.springframework.test.context.web.ServletTestExecutionListener] to prepare test instance [com.example.cms_quanlyhethong.CmsQuanlyhethongApplicationTests@4468ced2]
+2026-01-08T16:16:06.033+07:00  WARN 20220 --- [main] o.s.test.context.TestContextManager      : Caught exception while allowing TestExecutionListener [org.springframework.test.context.web.ServletTestExecutionListener] to prepare test instance [com.example.cms_quanlyhethong.CmsQuanlyhethongApplicationTests@62682ece]
 
-java.lang.IllegalStateException: Failed to load ApplicationContext for [WebMergedContextConfiguration@506654fa testClass = com.example.cms_quanlyhethong.CmsQuanlyhethongApplicationTests, locations = [], classes = [com.example.cms_quanlyhethong.CmsQuanlyhethongApplication], contextInitializerClasses = [], activeProfiles = [], propertySourceDescriptors = [], propertySourceProperties = ["org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true"], contextCustomizers = [org.springframework.boot.test.context.PropertyMappingContextCustomizer@0, org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@186978a6, org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer@6d366c9b, org.springframework.boot.test.autoconfigure.OnFailureConditionReportContextCustomizerFactory$OnFailureConditionReportContextCustomizer@3a320ade, org.springframework.test.context.support.DynamicPropertiesContextCustomizer@0, org.springframework.boot.webmvc.test.autoconfigure.WebDriverContextCustomizer@36b0fcd5, org.springframework.boot.web.server.context.SpringBootTestRandomPortContextCustomizerFactory$Customizer@6326d182, org.springframework.boot.test.context.SpringBootTestAnnotation@8d8881e2], resourceBasePath = "src/main/webapp", contextLoader = org.springframework.boot.test.context.SpringBootContextLoader, parent = null]
+java.lang.IllegalStateException: Failed to load ApplicationContext for [WebMergedContextConfiguration@51158fb1 testClass = com.example.cms_quanlyhethong.CmsQuanlyhethongApplicationTests, locations = [], classes = [com.example.cms_quanlyhethong.CmsQuanlyhethongApplication], contextInitializerClasses = [], activeProfiles = [], propertySourceDescriptors = [], propertySourceProperties = ["org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true"], contextCustomizers = [org.springframework.boot.test.context.PropertyMappingContextCustomizer@0, org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@186978a6, org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer@6d366c9b, org.springframework.boot.test.autoconfigure.OnFailureConditionReportContextCustomizerFactory$OnFailureConditionReportContextCustomizer@3a320ade, org.springframework.test.context.support.DynamicPropertiesContextCustomizer@0, org.springframework.boot.webmvc.test.autoconfigure.WebDriverContextCustomizer@36b0fcd5, org.springframework.boot.web.server.context.SpringBootTestRandomPortContextCustomizerFactory$Customizer@6326d182, org.springframework.boot.test.context.SpringBootTestAnnotation@8d8881e2], resourceBasePath = "src/main/webapp", contextLoader = org.springframework.boot.test.context.SpringBootContextLoader, parent = null]
 	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.lambda$loadContext$0(DefaultCacheAwareContextLoaderDelegate.java:195) ~[spring-test-7.0.2.jar:7.0.2]
 	at org.springframework.test.context.cache.DefaultContextCache.put(DefaultContextCache.java:172) ~[spring-test-7.0.2.jar:7.0.2]
 	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:160) ~[spring-test-7.0.2.jar:7.0.2]
@@ -629,3 +629,47 @@ Caused by: java.net.ConnectException: Connection refused: getsockopt
 	at com.mysql.cj.protocol.a.NativeSocketConnection.connect(NativeSocketConnection.java:53) ~[mysql-connector-j-9.5.0.jar:9.5.0]
 	... 149 common frames omitted
 
+2026-01-08T17:16:19.146+07:00  INFO 24316 --- [main] c.e.c.CmsQuanlyhethongApplicationTests   : Starting CmsQuanlyhethongApplicationTests using Java 21.0.8 with PID 24316 (started by Admin in C:\Users\Admin\Downloads\cms-quanlyhethong\backend)
+2026-01-08T17:16:19.146+07:00  INFO 24316 --- [main] c.e.c.CmsQuanlyhethongApplicationTests   : No active profile set, falling back to 1 default profile: "default"
+2026-01-08T17:16:19.816+07:00  INFO 24316 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-01-08T17:16:19.863+07:00  INFO 24316 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 42 ms. Found 3 JPA repository interfaces.
+2026-01-08T17:16:20.369+07:00  INFO 24316 --- [main] org.hibernate.orm.jpa                    : HHH008540: Processing PersistenceUnitInfo [name: default]
+2026-01-08T17:16:20.416+07:00  INFO 24316 --- [main] org.hibernate.orm.core                   : HHH000001: Hibernate ORM core version 7.2.0.Final
+2026-01-08T17:16:20.891+07:00  INFO 24316 --- [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-01-08T17:16:20.923+07:00  INFO 24316 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-01-08T17:16:21.065+07:00  INFO 24316 --- [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@3387ab0
+2026-01-08T17:16:21.065+07:00  INFO 24316 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-01-08T17:16:21.097+07:00  WARN 24316 --- [main] org.hibernate.orm.core                   : HHH000511: The 5.5.5 version for [org.hibernate.dialect.MySQLDialect] is no longer supported, hence certain features may not work properly.The minimum supported version is 8.0.0. Check the community dialects project for available legacy versions.
+2026-01-08T17:16:21.113+07:00  WARN 24316 --- [main] org.hibernate.orm.deprecation            : HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-01-08T17:16:21.129+07:00  INFO 24316 --- [main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [jdbc:mysql://localhost:3306/cms_quanlyhethong]
+	Database driver: MySQL Connector/J
+	Database dialect: MySQLDialect
+	Database version: 5.5.5
+	Default catalog/schema: cms_quanlyhethong/undefined
+	Autocommit mode: undefined/unknown
+	Isolation level: REPEATABLE_READ [default REPEATABLE_READ]
+	JDBC fetch size: none
+	Pool: DataSourceConnectionProvider
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-01-08T17:16:21.226+07:00  WARN 24316 --- [main] org.hibernate.orm.deprecation            : HHH90000033: Encountered use of deprecated annotation [interface jakarta.persistence.Temporal] at com.example.cms_quanlyhethong.entity.Role.createdAt.
+2026-01-08T17:16:21.260+07:00  WARN 24316 --- [main] org.hibernate.orm.deprecation            : HHH90000033: Encountered use of deprecated annotation [interface jakarta.persistence.Temporal] at com.example.cms_quanlyhethong.entity.Student.createdAt.
+2026-01-08T17:16:21.260+07:00  WARN 24316 --- [main] org.hibernate.orm.deprecation            : HHH90000033: Encountered use of deprecated annotation [interface jakarta.persistence.Temporal] at com.example.cms_quanlyhethong.entity.Student.dateofbirth.
+2026-01-08T17:16:21.260+07:00  WARN 24316 --- [main] org.hibernate.orm.deprecation            : HHH90000033: Encountered use of deprecated annotation [interface jakarta.persistence.Temporal] at com.example.cms_quanlyhethong.entity.Student.updatedAt.
+2026-01-08T17:16:21.260+07:00  WARN 24316 --- [main] org.hibernate.orm.deprecation            : HHH90000033: Encountered use of deprecated annotation [interface jakarta.persistence.Temporal] at com.example.cms_quanlyhethong.entity.User.createdAt.
+2026-01-08T17:16:21.276+07:00  WARN 24316 --- [main] org.hibernate.orm.deprecation            : HHH90000033: Encountered use of deprecated annotation [interface jakarta.persistence.Temporal] at com.example.cms_quanlyhethong.entity.User.updatedAt.
+2026-01-08T17:16:22.000+07:00  INFO 24316 --- [main] org.hibernate.orm.core                   : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-01-08T17:16:22.272+07:00  INFO 24316 --- [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-01-08T17:16:22.397+07:00  INFO 24316 --- [main] o.s.d.j.r.query.QueryEnhancerFactories   : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-01-08T17:16:22.729+07:00  WARN 24316 --- [main] .s.a.UserDetailsServiceAutoConfiguration : 
+
+Using generated security password: 1a0bca92-6de6-40c3-ae1a-19b41ba1818b
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2026-01-08T17:16:22.729+07:00  INFO 24316 --- [main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name inMemoryUserDetailsManager
+2026-01-08T17:16:23.265+07:00  INFO 24316 --- [main] c.e.c.CmsQuanlyhethongApplicationTests   : Started CmsQuanlyhethongApplicationTests in 4.422 seconds (process running for 5.617)
+2026-01-08T17:16:23.656+07:00  INFO 24316 --- [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-01-08T17:16:23.672+07:00  INFO 24316 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2026-01-08T17:16:23.672+07:00  INFO 24316 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
