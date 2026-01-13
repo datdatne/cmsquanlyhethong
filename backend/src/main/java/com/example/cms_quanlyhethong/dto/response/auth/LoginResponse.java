@@ -1,4 +1,4 @@
-package com.example.cms_quanlyhethong.dto.reponse.auth;
+package com.example.cms_quanlyhethong.dto.response.auth;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

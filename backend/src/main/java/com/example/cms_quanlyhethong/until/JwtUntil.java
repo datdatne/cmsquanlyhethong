@@ -9,10 +9,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.stereotype.Component;
 
 import java.security.Key;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 @Component
 public class JwtUntil {
@@ -57,7 +54,11 @@ public class JwtUntil {
                 .build()
                 .parseClaimsJws(token)
                 .getBody();
-        return (Set<String>) claims.get("roles");
+        List<String> roles = claims.get("roles", List.class);
+        if (roles == null) {
+            return new java.util.HashSet<>();
+        }
+        return new HashSet<>(roles);
     }
     /*
     Kiem tra token co hop le hay khong

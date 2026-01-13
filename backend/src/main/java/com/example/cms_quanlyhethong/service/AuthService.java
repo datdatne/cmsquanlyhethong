@@ -1,6 +1,6 @@
 package com.example.cms_quanlyhethong.service;
 
-import com.example.cms_quanlyhethong.dto.reponse.auth.LoginResponse;
+import com.example.cms_quanlyhethong.dto.response.auth.LoginResponse;
 import com.example.cms_quanlyhethong.dto.request.auth.LoginRequest;
 import com.example.cms_quanlyhethong.entity.User;
 import com.example.cms_quanlyhethong.repository.UserRepository;

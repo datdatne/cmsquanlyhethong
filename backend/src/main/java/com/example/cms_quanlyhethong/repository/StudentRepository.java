@@ -8,11 +8,11 @@ import java.util.Optional;
 public interface StudentRepository extends JpaRepository<Student,Long>
 {
     // kiem tra ton tai ma sinh vien
-    boolean exitByStudentCode(String studentCode);
+    boolean existsByStudentCode(String studentcode);
     // kiem tra ton tai email
-    boolean exitByEmail(String email);
+    boolean existsByEmail(String email);
     //tim kiem theo ma sinh vien
-    Optional<Student> findByStudentCode(String studentCode);
+    Optional<Student> findByStudentCode(String studentcode);
     //tim kiem theo email sinh vien
     Optional<Student> findByEmail(String email);
 }

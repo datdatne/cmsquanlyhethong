@@ -1,4 +1,4 @@
-package com.example.cms_quanlyhethong.dto.reponse.user;
+package com.example.cms_quanlyhethong.dto.response.user;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -48,7 +48,7 @@ import java.util.stream.Collectors;
 
                 // BƯỚC 7: Chuyển roles thành authorities (thêm prefix "ROLE_")
                 Set<SimpleGrantedAuthority> authorities = roles.stream()
-                        .map(role -> new SimpleGrantedAuthority("ROLE_" + role))
+                        .map(role -> new SimpleGrantedAuthority( role))
                         .collect(Collectors.toSet());
 
                 // BƯỚC 8: Tạo Authentication object

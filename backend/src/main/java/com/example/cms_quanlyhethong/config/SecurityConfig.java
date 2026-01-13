@@ -1,4 +1,4 @@
-package com.example.cms_quanlyhethong.config;
+   package com.example.cms_quanlyhethong.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;

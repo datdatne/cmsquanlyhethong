@@ -1,13 +1,9 @@
 package com.example.cms_quanlyhethong.controller;
 
-import com.example.cms_quanlyhethong.dto.reponse.auth.LoginResponse;
+import com.example.cms_quanlyhethong.dto.response.auth.LoginResponse;
 import com.example.cms_quanlyhethong.dto.request.auth.LoginRequest;
-import com.example.cms_quanlyhethong.entity.User;
-import com.example.cms_quanlyhethong.repository.UserRepository;
 import com.example.cms_quanlyhethong.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.Repository;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

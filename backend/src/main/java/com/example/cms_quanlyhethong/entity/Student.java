@@ -16,12 +16,12 @@ public class Student {
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private long id;
     @Column(name="student_code",length=20,unique=true,nullable=false)
-    private String studentcode;
+    private String studentCode;
     @Column(name="full_name",length=100)
-    private String fullname;
+    private String fullName;
     @Column(name="date_of_birth")
     @Temporal(TemporalType.DATE)
-    private Date dateofbirth;
+    private Date dateOfBirth;
     @Column(name="email",length=100,unique=true)
     private String email;
     @Column(name="phone",length=15,nullable=true)
@@ -31,7 +31,7 @@ public class Student {
     @Column(name="major",length=100,nullable=true)
     private String major;
     @Column(name="class_name",length=50,nullable=true)
-    private String classname;
+    private String className;
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name="created_at",nullable=false)
