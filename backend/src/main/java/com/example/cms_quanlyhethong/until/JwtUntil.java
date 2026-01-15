@@ -57,6 +57,7 @@ public class JwtUntil {
         List<String> roles = claims.get("roles", List.class);
         if (roles == null) {
             return new java.util.HashSet<>();
+            // kiem tra de tranh loi tra ve null
         }
         return new HashSet<>(roles);
     }

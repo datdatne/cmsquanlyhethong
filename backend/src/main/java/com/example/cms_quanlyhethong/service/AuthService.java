@@ -9,6 +9,7 @@ import com.example.cms_quanlyhethong.until.JwtUntil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -18,10 +19,12 @@ import java.util.stream.Collectors;
 public class AuthService {
     @Autowired
     private UserRepository userRepository;
-    private BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
     @Autowired
     private JwtUntil jwtUntil;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
     public LoginResponse Login(LoginRequest request) {
+
         // tim user theo username
         Optional<User>  userOptional = userRepository.findByUsername(request.getUsername());
         // kiem tra user ton tai

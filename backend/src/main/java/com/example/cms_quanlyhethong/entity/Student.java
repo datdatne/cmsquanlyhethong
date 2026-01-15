@@ -41,6 +41,7 @@ public class Student {
     @UpdateTimestamp
     private Date updatedAt;
     //mappedBy la inverse
-    @OneToOne(mappedBy="student")
+    @OneToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 }

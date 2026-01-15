@@ -3,6 +3,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.util.Date;
 import java.util.HashSet;
@@ -17,23 +18,23 @@ import java.util.Set;
 public class User {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-    private long id;
-    @Column(name="username",length=255,unique=false,nullable=true)
+    private Long id;
+    @Column(name="username",length=255,unique=true,nullable=false)
     private String username;
     @Column(name = "password",unique =true, nullable = false, length = 255)
     @JsonIgnore
     private String password;
-    @Column(name = "email", unique = true, nullable = false, length = 100)
+    @Column(name = "email",  nullable = false, length = 100)
     private String email;
     @Column(name = "full_name", length = 100)
     private String fullname;
     @Column(name = "is_active", nullable = false)
-    private boolean isActive;
+    private boolean isActive=true;
     @CreationTimestamp
     @Column(name = "created_at", nullable = false, updatable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt;
-    @CreationTimestamp
+    @UpdateTimestamp
     @Column(name = "update_at", nullable = false, updatable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date updatedAt;
@@ -46,7 +47,7 @@ public class User {
     @JsonIgnore
     private Set<Role> roles = new HashSet<>();
     @OneToOne
-    @JoinColumn(name="student_id")
+    @JoinColumn(name="user")
     @JsonIgnore
     private Student student;
 }
