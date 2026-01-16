@@ -3,19 +3,29 @@ package com.example.cms_quanlyhethong.service;
 import com.example.cms_quanlyhethong.dto.request.student.StudentCreateRequest;
 import com.example.cms_quanlyhethong.dto.request.student.StudentUpdateRequest;
 import com.example.cms_quanlyhethong.dto.response.student.StudentResponse;
+import com.example.cms_quanlyhethong.entity.Role;
 import com.example.cms_quanlyhethong.entity.Student;
+import com.example.cms_quanlyhethong.entity.User;
+import com.example.cms_quanlyhethong.repository.RoleRepository;
 import com.example.cms_quanlyhethong.repository.StudentRepository;
+import com.example.cms_quanlyhethong.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
-
 @Service
 public class StudentService {
 
     @Autowired
     private StudentRepository studentRepository;
+    @Autowired
+    private RoleRepository roleRepository;
+    @Autowired
+    private UserRepository userRepository;
+    @Autowired // Inject từ SecurityConfig
+    private BCryptPasswordEncoder passwordEncoder;
     /**
      * ==========================================
      * 0. CONVERT ENTITY → DTO (Private method)
@@ -96,8 +106,20 @@ public class StudentService {
         if (studentRepository.existsByEmail(request.getEmail())) {
             throw new RuntimeException("Email đã tồn tại: " + request.getEmail());
         }
+        //BƯỚC 3: Tạo user trước
+        User user = new User();
+        user.setUsername(request.getStudentcode()); // username = mã SV
+        user.setEmail(request.getEmail());
+        user.setPassword(passwordEncoder.encode("123456")); // mật khẩu mặc định
+        user.setFullname(request.getFullname());
+        user.setActive(true);
+        //BƯỚC 4 : Thêm Role vào Student
+        Role studentRole = roleRepository.findByName("ROLE_STUDENT")
+                .orElseThrow(() -> new RuntimeException("Role STUDENT không tồn tại"));
+        user.getRoles().add(studentRole);
+        User savedUser = userRepository.save(user); //luu User truoc
 
-        // BƯỚC 3: Convert DTO → Entity
+        // BƯỚC 5: Convert DTO → Entity (Tao Student)
         Student student = new Student();
         student.setStudentCode(request.getStudentcode());
         student.setFullName(request.getFullname());
@@ -107,6 +129,7 @@ public class StudentService {
         student.setAddress(request.getAddress());
         student.setMajor(request.getMajor());
         student.setClassName(request.getClassname());
+        student.setUser(savedUser);
         // createdAt, updatedAt tự động set bởi @CreationTimestamp, @UpdateTimestamp
 
         // BƯỚC 4: Lưu vào DB

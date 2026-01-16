@@ -46,8 +46,7 @@ public class User {
     )
     @JsonIgnore
     private Set<Role> roles = new HashSet<>();
-    @OneToOne
-    @JoinColumn(name="user")
+    @OneToOne(mappedBy="user",cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     private Student student;
 }
