@@ -1,25 +1,34 @@
+// ============================================
+// FILE: App.js
+// MỤC ĐÍCH: Component gốc của ứng dụng
+// ============================================
+//
+// App.js là "entry point" của React app
+// Tất cả các component khác sẽ được render bên trong App
+//
+// SO SÁNH VỚI SPRING BOOT:
+// - App.js ≈ Main Application class
+// - Các component con ≈ Các Controller
+//
+
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+
+// Import component Login
 import Login from './pages/Login';
+
+// Import CSS (nếu cần)
 import './App.css';
 
 function App() {
-  return (
-    <Router>
-      <Routes>
-        {/* Trang chủ redirect về login */}
-        <Route path="/" element={<Navigate to="/login" />} />
+    // ===== TẠM THỜI: Chỉ hiển thị trang Login =====
+    // Sau này sẽ thêm Router để điều hướng giữa các trang
 
-        {/* Trang đăng nhập */}
-        <Route path="/login" element={<Login />} />
-
-        {/* Trang dashboard (tạm thời) */}
-        <Route path="/admin/dashboard" element={<h1>Admin Dashboard</h1>} />
-        <Route path="/teacher/dashboard" element={<h1>Teacher Dashboard</h1>} />
-        <Route path="/student/dashboard" element={<h1>Student Dashboard</h1>} />
-      </Routes>
-    </Router>
-  );
+    return (
+        <div className="App">
+            {/* Render component Login */}
+            <Login />
+        </div>
+    );
 }
 
 export default App;

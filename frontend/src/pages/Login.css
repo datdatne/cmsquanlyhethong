@@ -1,77 +1,188 @@
+/* ============================================
+   FILE: Login.css
+   MỤC ĐÍCH: Styling cho trang Login
+   ============================================ */
+
+/* Container bọc toàn bộ trang login */
 .login-container {
+    /* Flexbox để căn giữa */
     display: flex;
-    justify-content: center;
-    align-items: center;
+    justify-content: center;  /* Căn giữa theo chiều ngang */
+    align-items: center;      /* Căn giữa theo chiều dọc */
+
+    /* Chiều cao = 100% viewport */
     min-height: 100vh;
+
+    /* Background gradient */
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+
+    /* Padding cho mobile */
+    padding: 20px;
 }
 
-.login-box {
-    background: white;
-    padding: 40px;
-    border-radius: 10px;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+/* Card chứa form login */
+.login-card {
+    /* Kích thước */
     width: 100%;
     max-width: 400px;
+
+    /* Background và border */
+    background: white;
+    border-radius: 16px;
+
+    /* Shadow */
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+
+    /* Padding bên trong */
+    padding: 40px;
 }
 
-.login-box h2 {
+/* Header của form */
+.login-header {
     text-align: center;
     margin-bottom: 30px;
-    color: #333;
 }
 
+.login-header h1 {
+    color: #333;
+    font-size: 28px;
+    margin-bottom: 8px;
+}
+
+.login-header p {
+    color: #666;
+    font-size: 14px;
+}
+
+/* Error message */
+.error-message {
+    background-color: #fee2e2;
+    border: 1px solid #ef4444;
+    color: #dc2626;
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    font-size: 14px;
+    text-align: center;
+}
+
+/* Form group (chứa label + input) */
 .form-group {
     margin-bottom: 20px;
 }
 
 .form-group label {
     display: block;
-    margin-bottom: 5px;
-    color: #555;
+    margin-bottom: 8px;
+    color: #333;
     font-weight: 500;
+    font-size: 14px;
 }
 
 .form-group input {
+    /* Kích thước */
     width: 100%;
-    padding: 12px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    font-size: 14px;
+    padding: 12px 16px;
+
+    /* Border */
+    border: 2px solid #e5e7eb;
+    border-radius: 8px;
+
+    /* Font */
+    font-size: 16px;
+
+    /* Transition cho hiệu ứng */
+    transition: border-color 0.2s, box-shadow 0.2s;
+
+    /* Box sizing để padding không làm tăng width */
     box-sizing: border-box;
 }
 
+/* Input khi focus */
 .form-group input:focus {
     outline: none;
     border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
 }
 
-button[type="submit"] {
-    width: 100%;
-    padding: 12px;
-    background: #667eea;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background 0.3s;
-}
-
-button[type="submit"]:hover {
-    background: #5568d3;
-}
-
-button[type="submit"]:disabled {
-    background: #ccc;
+/* Input khi disabled */
+.form-group input:disabled {
+    background-color: #f3f4f6;
     cursor: not-allowed;
 }
 
-.error-message {
-    background: #ffebee;
-    color: #c62828;
-    padding: 10px;
-    border-radius: 5px;
-    margin-bottom: 20px;
-    text-align: center;
+/* Button đăng nhập */
+.login-button {
+    /* Kích thước */
+    width: 100%;
+    padding: 14px;
+
+    /* Background gradient */
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+
+    /* Border */
+    border: none;
+    border-radius: 8px;
+
+    /* Font */
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
+
+    /* Cursor */
+    cursor: pointer;
+
+    /* Transition */
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+/* Button hover effect */
+.login-button:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+}
+
+/* Button active effect */
+.login-button:active:not(:disabled) {
+    transform: translateY(0);
+}
+
+/* Button disabled */
+.login-button:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+/* Debug info box - XÓA KHI DEPLOY */
+.debug-info {
+    margin-top: 30px;
+    padding: 16px;
+    background-color: #fef3c7;
+    border: 1px dashed #f59e0b;
+    border-radius: 8px;
+    font-size: 12px;
+}
+
+.debug-info h4 {
+    margin: 0 0 10px 0;
+    color: #92400e;
+}
+
+.debug-info p {
+    margin: 4px 0;
+    color: #78350f;
+    font-family: monospace;
+}
+
+/* ============================================
+   RESPONSIVE - Điều chỉnh cho màn hình nhỏ
+   ============================================ */
+@media (max-width: 480px) {
+    .login-card {
+        padding: 24px;
+    }
+
+    .login-header h1 {
+        font-size: 24px;
+    }
 }
