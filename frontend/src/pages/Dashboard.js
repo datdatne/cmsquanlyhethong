@@ -16,6 +16,7 @@ function Dashboard() {
     // Chạy 1 lần khi component được mount (hiển thị)
     // Giống @PostConstruct trong Spring
     useEffect(() => {
+
         // Lấy thông tin user từ localStorage
         const currentUser = getCurrentUser();
 
@@ -106,7 +107,7 @@ function Dashboard() {
             <main className="main-content">
                 {/* Header */}
                 <header className="main-header">
-                    <h1>Dashboard</h1>
+                    <h1>{user.username}</h1>
                     <div className="user-info">
                         <span className="user-name">Xin chào, {user.fullname || user.username}!</span>
                         <span className="user-role">
@@ -117,13 +118,14 @@ function Dashboard() {
 
                 {/* Stats Cards */}
                 <section className="stats-grid">
+                {(user.roles?.includes('ROLE_ADMIN') || user.roles?.includes('ROLE_TEACHER')) && (
                     <div className="stat-card">
                         <div className="stat-icon blue">👨‍🎓</div>
                         <div className="stat-info">
                             <h3>Sinh viên</h3>
                             <p className="stat-number">150</p>
                         </div>
-                    </div>
+                    </div>)}
 
                     <div className="stat-card">
                         <div className="stat-icon green">👨‍🏫</div>

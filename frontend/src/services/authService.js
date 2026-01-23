@@ -47,6 +47,8 @@ export const login = async (username, password) => {
         //        fullname: "Administrator",
         //        roles: ["ROLE_ADMIN"]
         //    }
+
+        // sau khi back end trả dữ liệu sẽ đến bước này
         const data = response.data;
 
         // 5. Lưu token và user vào localStorage
@@ -56,6 +58,7 @@ export const login = async (username, password) => {
             localStorage.setItem('token', data.token);
             localStorage.setItem('user', JSON.stringify(data));
             // JSON.stringify: Chuyển object → string (localStorage chỉ lưu string)
+            //localStorage chỉ lưu được string
         }
 
         // 6. Trả về data để component sử dụng
@@ -106,7 +109,12 @@ export const getCurrentUser = () => {
 //
 export const isAuthenticated = () => {
     const token = localStorage.getItem('token');
-    return token !== null;
+    if(!token)
+    {
+    return false ;
+    }
+    return true;
+
     // Có token → đã đăng nhập
     // Không có token → chưa đăng nhập
 };
