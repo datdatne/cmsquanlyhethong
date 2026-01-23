@@ -35,7 +35,7 @@ public class SecurityConfig {
                 .sessionManagement(session -> session .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 // Khong dung Session
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/auth/**").permitAll()c
+                        .requestMatchers("/api/auth/**").permitAll()
                         .anyRequest().permitAll() // Cho phép tất cả request khác
                 )
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)

@@ -15,6 +15,9 @@
 // - useEffect: Chạy code khi component mount/update (giống @PostConstruct)
 import React, { useState } from 'react';
 
+// Import useNavigate từ React Router để chuyển trang
+import { useNavigate } from 'react-router-dom';
+
 // Import hàm login từ authService
 import { login } from '../services/authService';
 
@@ -30,6 +33,9 @@ import './Login.css';
 // - State ≈ Private fields
 //
 function Login() {
+
+    // Hook để chuyển trang (thay cho window.location.href)
+    const navigate = useNavigate();
 
     // ===== PHẦN 3: KHAI BÁO STATE =====
     // useState() trả về mảng 2 phần tử: [giáTrị, hàmCậpNhật]
@@ -95,9 +101,9 @@ function Login() {
             console.log('User roles:', response.roles);
 
             // Đăng nhập thành công → chuyển trang
-            // window.location.href: Chuyển đến URL mới
+            // navigate: Chuyển đến URL mới (React Router)
             alert('Đăng nhập thành công! Chào ' + response.fullname);
-            window.location.href = '/dashboard';  // Tạm thời
+            navigate('/dashboard');
 
         } catch (err) {
             // ===== DEBUG POINT 4: Khi có lỗi =====
@@ -159,9 +165,9 @@ function Login() {
                             id="username"
                             placeholder="Nhập username"
                             value={username}  // Liên kết với state
-                             onChange={(e)=> setUsername(e.target.value)}
+                            onChange={(e) => setUsername(e.target.value)}
                             // onChange: Sự kiện khi input thay đổi
-                            // e.target.value: Giá trị mới của input (e.target phần tử gây ra sự kiện )
+                            // e.target.value: Giá trị mới của input
                             // setUsername(): Cập nhật state → UI tự động cập nhật
                             disabled={loading}  // Disable khi đang loading
                         />
