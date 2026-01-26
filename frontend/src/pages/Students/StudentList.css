@@ -1,0 +1,195 @@
+/* ============================================
+   FILE: StudentList.css
+   MỤC ĐÍCH: Styling cho trang danh sách sinh viên
+   ============================================ */
+
+/* Container chính */
+.student-list-container {
+    padding: 20px;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+/* Header */
+.student-list-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.student-list-header h1 {
+    color: #333;
+    font-size: 28px;
+    margin: 0;
+}
+
+/* Debug box */
+.debug-box {
+    background: #fef3c7;
+    border: 1px dashed #f59e0b;
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    font-size: 14px;
+}
+
+.debug-box h4 {
+    margin: 0 0 10px 0;
+    color: #92400e;
+}
+
+.debug-box p {
+    margin: 5px 0;
+    color: #78350f;
+}
+
+/* Loading state */
+.loading-container {
+    text-align: center;
+    padding: 50px;
+    font-size: 18px;
+    color: #666;
+}
+
+/* Error message */
+.error-message {
+    background: #fee2e2;
+    border: 1px solid #ef4444;
+    color: #dc2626;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.error-message strong {
+    font-weight: 600;
+}
+
+/* Summary info */
+.student-summary {
+    margin-bottom: 20px;
+    padding: 15px;
+    background: #f3f4f6;
+    border-radius: 8px;
+}
+
+.student-summary p {
+    margin: 0;
+    font-size: 16px;
+    color: #374151;
+}
+
+.student-summary strong {
+    color: #667eea;
+    font-size: 18px;
+}
+
+/* Table container */
+.table-container {
+    overflow-x: auto;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Table */
+.student-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+}
+
+/* Table header */
+.student-table thead {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+}
+
+.student-table th {
+    padding: 15px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Table body */
+.student-table tbody tr {
+    border-bottom: 1px solid #e5e7eb;
+    transition: background-color 0.2s;
+}
+
+.student-table tbody tr:hover {
+    background-color: #f9fafb;
+}
+
+.student-table tbody tr:last-child {
+    border-bottom: none;
+}
+
+.student-table td {
+    padding: 15px;
+    color: #374151;
+    font-size: 14px;
+}
+
+/* STT column */
+.student-table td:first-child {
+    text-align: center;
+    font-weight: 500;
+    color: #6b7280;
+}
+
+/* Empty state */
+.empty-state {
+    text-align: center;
+    padding: 50px 30px;
+    color: #9ca3af;
+    font-size: 16px;
+}
+.btn-back {
+        padding: 10px 20px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 14px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .btn-back:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+    }
+
+    .btn-back:active {
+        transform: translateY(0);
+    }
+/* Responsive */
+@media (max-width: 768px) {
+    .student-list-container {
+        padding: 10px;
+    }
+
+    .student-list-header h1 {
+        font-size: 22px;
+    }
+
+    .student-table th,
+    .student-table td {
+        padding: 10px;
+        font-size: 12px;
+    }
+
+
+    /* Ẩn một số cột trên mobile */
+    .student-table th:nth-child(5),
+    .student-table td:nth-child(5),
+    .student-table th:nth-child(6),
+    .student-table td:nth-child(6) {
+        display: none;
+    }
+}

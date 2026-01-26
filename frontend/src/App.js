@@ -17,6 +17,8 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 
+import StudentList from './pages/Students/StudentList';
+import UserList from './pages/Users/UserList';
 // Import service để check auth
 import { isAuthenticated } from './services/authService';
 
@@ -95,7 +97,7 @@ function App() {
                         path="/students"
                         element={
                             <ProtectedRoute>
-                                <Dashboard /> {/* Tạm thời dùng Dashboard */}
+                                <StudentList /> {/* Tạm thời dùng Dashboard */}
                             </ProtectedRoute>
                         }
                     />
@@ -104,7 +106,7 @@ function App() {
                         path="/users"
                         element={
                             <ProtectedRoute>
-                                <Dashboard />
+                                <UserList />
                             </ProtectedRoute>
                         }
                     />
