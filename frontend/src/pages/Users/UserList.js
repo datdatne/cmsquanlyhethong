@@ -6,6 +6,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import api from '../../services/api';
+import {getCurrentUser}from '../../services/authService';
 import './UserList.css';
 
 function UserList() {
@@ -97,14 +98,46 @@ function UserList() {
     };
 
     // ===== KÍCH HOẠT/KHÓA USER =====
-    const handleToggleStatus = async (userId) => {
+    const handleToggleStatus = async (userId, currentStatus, userRoles) => {
+
+        const currentUser = getCurrentUser();
+
+        if (userId === currentUser.id) {
+            alert('⚠️ Bạn không thể thay đổi trạng thái tài khoản của chính mình!');
+            return;
+        }
+
+        // ====== BƯỚC 2: Xác nhận hành động ======
+         console.log("currentStatus",currentStatus);
+        const action = currentStatus ? 'MỞ KHÓA' : 'KHÓA';
+        console.log("currentStatus",currentStatus);
+        console.log("action",action);
+        const confirmMessage = `Bạn có chắc muốn ${action} tài khoản này?`;
+
+        if (!window.confirm(confirmMessage)) {
+            return;
+        }
+
+        // ====== BƯỚC 3: Gọi API ======
+        setLoading(true);
         try {
-            await api.patch(`/users/${userId}/toggle-status`);
-            alert('✅ Cập nhật trạng thái thành công!');
-            fetchUsers(); // Reload danh sách
-        } catch (err) {
-            console.error('=== Lỗi khi toggle status ===', err);
-            handleApiError(err);
+
+
+            // ====== BƯỚC 4: Cập nhật UI ======
+            setUsers(users.map(user =>
+                user.id === userId
+                    ? { ...user, isActive: !currentStatus }
+                    : user
+            ));
+
+            // ====== BƯỚC 5: Thông báo thành công ======
+            alert(`✅ ${action} tài khoản thành công!`);
+
+        } catch (error) {
+            console.error('Toggle status error:', error);
+            alert(`❌ Không thể ${action} tài khoản. Vui lòng thử lại!`);
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -266,8 +299,8 @@ function UserList() {
                                                 </div>
                                             </td>
                                             <td>
-                                                <span className={`status-badge ${user.isActive ? 'active' : 'inactive'}`}>
-                                                    {user.isActive ? '✅ Active' : '🔒 Locked'}
+                                                <span className={`status-badge ${user.isActive ? 'inactive' :'active' }`}>
+                                                    {user.isActive ? '🔒 Locked' : '✅ Active' }
                                                 </span>
                                             </td>
                                             <td>
@@ -279,12 +312,22 @@ function UserList() {
                                                     >
                                                         ✏️
                                                     </button>
+                                                    {/* Button Khóa/Mở khóa */}
                                                     <button
-                                                        onClick={() => handleToggleStatus(user.id)}
-                                                        className="btn-toggle"
-                                                        title={user.isActive ? 'Khóa tài khoản' : 'Kích hoạt'}
+                                                        onClick={() => handleToggleStatus(
+                                                            user.id,
+                                                            user.isActive,
+                                                            user.roles
+                                                        )}
+                                                        className={user.isActive ? 'btn-danger' : 'btn-success'}
+                                                        disabled={loading || user.id === getCurrentUser().id}
+                                                        title={
+                                                            user.id === getCurrentUser().id
+                                                                ? 'Không thể tự thay đổi trạng thái'
+                                                                : (user.isActive ? 'Khóa  tài khoản' :'Mở tài khoản' )
+                                                        }
                                                     >
-                                                        {user.isActive ? '🔒' : '🔓'}
+                                                        {user.isActive ? '🔒 Mở' : '🔓 Khóa'}
                                                     </button>
                                                     <button
                                                         onClick={() => openDeleteModal(user)}

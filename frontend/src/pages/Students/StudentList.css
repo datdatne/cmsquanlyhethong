@@ -168,6 +168,7 @@
     .btn-back:active {
         transform: translateY(0);
     }
+
 /* Responsive */
 @media (max-width: 768px) {
     .student-list-container {

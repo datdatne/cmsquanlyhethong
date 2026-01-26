@@ -3,7 +3,7 @@
 // ============================================
 
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom'; // ← Import để điều hướng
+import { useNavigate } from 'react-router-dom'; //
 import api from '../../services/api';
 import './StudentList.css';
 

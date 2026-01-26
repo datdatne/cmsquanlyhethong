@@ -368,6 +368,23 @@
     background: #b91c1c;
 }
 
+
+.btn-success {
+    padding: 6px 10px;        /* Giữ nguyên kích thước cũ của bạn */
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.2s;
+
+    /* Màu xanh lá (Pastel) cho đồng bộ với các nút khác của bạn */
+    background: #d1fae5;
+    color: #065f46;           /* Thêm màu chữ xanh đậm cho dễ đọc */
+}
+
+.btn-success:hover {
+    background: #a7f3d0;      /* Màu đậm hơn chút khi hover */
+}
 .btn-cancel {
     flex: 1;
     padding: 12px;
@@ -382,7 +399,37 @@
 .btn-cancel:hover {
     background: #e5e7eb;
 }
+/* Button bị disable */
+.btn-danger:disabled,
+.btn-success:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background: #94a3b8;
+}
 
+/* Tooltip khi hover vào button disable */
+button[disabled]:hover::after {
+    content: attr(title);
+    position: absolute;
+    bottom: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #1e293b;
+    color: white;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    white-space: nowrap;
+}
+.status-badge.active {
+    background: #dcfce7;
+    color: #166534;
+}
+
+.status-badge.inactive {
+    background: #fee2e2;
+    color: #991b1b;
+}
 /* Responsive */
 @media (max-width: 768px) {
     .user-list-header {

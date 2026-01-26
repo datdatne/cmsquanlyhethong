@@ -66,10 +66,9 @@ function App() {
         <BrowserRouter>
             <div className="App">
                 <Routes>
-                    {/* Route mặc định → chuyển về dashboard */}
                     <Route
                         path="/"
-                        element={<Navigate to="/dashboard" replace />}
+                        element={<Navigate to="/login" replace />}
                     />
 
                     {/* Trang Login - Public */}
