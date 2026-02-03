@@ -10,8 +10,14 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import RoleList from './pages/Roles/RoleList';
+import RoleCreate from './pages/Roles/RoleCreate';
+import RoleEdit from './pages/Roles/RoleEdit';
+
+import Profile from './pages/Profile/Profile';
 
 import StudentList from './pages/Students/StudentList';
+import StudentCreate from './pages/Students/StudentCreate';
+import StudentEdit from './pages/Students/StudentEdit';
 import UserList from './pages/Users/UserList';
 import UserEdit from './pages/Users/UserEdit';
 import UserCreate from './pages/Users/UserCreate';
@@ -51,7 +57,7 @@ function App() {
                     {/* Route mặc định */}
                     <Route
                         path="/"
-                        element={<Navigate to="/dashboard" replace />}
+                        element={<Navigate to="/login" replace />}
                     />
 
                     {/* Trang Login - Public */}
@@ -61,6 +67,14 @@ function App() {
                             <PublicRoute>
                                 <Login />
                             </PublicRoute>
+                        }
+                    />
+                    <Route
+                        path="/profile"
+                        element={
+                            <ProtectedRoute>
+                                <Profile />
+                            </ProtectedRoute>
                         }
                     />
 
@@ -83,7 +97,30 @@ function App() {
                             </ProtectedRoute>
                         }
                     />
-
+                    <Route
+                        path="/students"
+                        element={
+                            <ProtectedRoute>
+                                <StudentList />
+                            </ProtectedRoute>
+                        }
+                    />
+                    <Route
+                        path="/students/create"
+                        element={
+                            <ProtectedRoute>
+                                <StudentCreate />
+                            </ProtectedRoute>
+                        }
+                    />
+                    <Route
+                        path="/students/edit/:id"
+                        element={
+                            <ProtectedRoute>
+                                <StudentEdit />
+                            </ProtectedRoute>
+                        }
+                    />
                     {/* Trang Users */}
                     <Route
                         path="/users"
@@ -117,6 +154,24 @@ function App() {
                         element={
                             <ProtectedRoute>
                                 <RoleList />
+                            </ProtectedRoute>
+                        }
+                    />
+                    //tạo roles
+                    <Route
+                        path="/roles/create"
+                        element={
+                            <ProtectedRoute>
+                                <RoleCreate />
+                            </ProtectedRoute>
+                        }
+                    />
+                    //sửa roles
+                    <Route
+                        path="/roles/edit/:id"
+                        element={
+                            <ProtectedRoute>
+                                <RoleEdit />
                             </ProtectedRoute>
                         }
                     />

@@ -1,16 +1,17 @@
 // ============================================
-// FILE: frontend/src/pages/Students/StudentCreate.js
-// MỤC ĐÍCH: Form tạo sinh viên mới (chỉ ADMIN)
+// FILE: frontend/src/pages/Students/StudentEdit.js
+// MỤC ĐÍCH: Form chỉnh sửa thông tin sinh viên (chỉ ADMIN)
 // ============================================
 
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import api from '../../services/api';
 import { getCurrentUser } from '../../services/authService';
 import './StudentForm.css';
 
-function StudentCreate() {
+function StudentEdit() {
     const navigate = useNavigate();
+    const { id } = useParams(); // Lấy ID từ URL
     const currentUser = getCurrentUser();
 
     // Kiểm tra quyền ADMIN
@@ -29,15 +30,56 @@ function StudentCreate() {
     });
 
     const [loading, setLoading] = useState(false);
+    const [loadingData, setLoadingData] = useState(true);
     const [error, setError] = useState(null);
 
     // Nếu không phải ADMIN, redirect
-    React.useEffect(() => {
+    useEffect(() => {
         if (!isAdmin) {
             alert('⛔ Bạn không có quyền truy cập trang này!');
             navigate('/students');
         }
     }, [isAdmin, navigate]);
+
+    // Fetch student data
+    useEffect(() => {
+        const fetchStudent = async () => {
+            try {
+                setLoadingData(true);
+                const response = await api.get(`/students/${id}`);
+
+                console.log('=== Student data ===', response.data);
+
+                // Format date cho input type="date"
+                let dateForInput = '';
+                if (response.data.dateofbirth) {
+                    const date = new Date(response.data.dateofbirth);
+                    dateForInput = date.toISOString().split('T')[0];
+                }
+
+                setFormData({
+                    studentcode: response.data.studentcode || '',
+                    fullname: response.data.fullname || '',
+                    dateofbirth: dateForInput,
+                    email: response.data.email || '',
+                    phone: response.data.phone || '',
+                    address: response.data.address || '',
+                    major: response.data.major || '',
+                    classname: response.data.classname || ''
+                });
+
+            } catch (err) {
+                console.error('=== Lỗi khi tải sinh viên ===', err);
+                setError('Không thể tải thông tin sinh viên!');
+            } finally {
+                setLoadingData(false);
+            }
+        };
+
+        if (id) {
+            fetchStudent();
+        }
+    }, [id]);
 
     // Handle input change
     const handleChange = (e) => {
@@ -53,7 +95,7 @@ function StudentCreate() {
         e.preventDefault();
 
         // Validate
-        if (!formData.studentcode || !formData.fullname || !formData.email) {
+        if (!formData.fullname || !formData.email) {
             alert('⚠️ Vui lòng điền đầy đủ các trường bắt buộc!');
             return;
         }
@@ -63,28 +105,40 @@ function StudentCreate() {
             setError(null);
 
             // Gọi API
-            await api.post('/students', formData);
+            await api.put(`/students/${id}`, formData);
 
-            alert('✅ Tạo sinh viên thành công!');
+            alert('✅ Cập nhật sinh viên thành công!');
             navigate('/students');
 
         } catch (err) {
-            console.error('=== Lỗi khi tạo sinh viên ===', err);
+            console.error('=== Lỗi khi cập nhật sinh viên ===', err);
 
             if (err.response && err.response.data) {
                 setError(err.response.data);
             } else {
-                setError('Không thể tạo sinh viên!');
+                setError('Không thể cập nhật sinh viên!');
             }
         } finally {
             setLoading(false);
         }
     };
 
+    // Loading state
+    if (loadingData) {
+        return (
+            <div className="student-form-container">
+                <div className="loading-container">
+                    <div className="loading-spinner"></div>
+                    <p>⏳ Đang tải dữ liệu...</p>
+                </div>
+            </div>
+        );
+    }
+
     return (
         <div className="student-form-container">
             <div className="form-header">
-                <h1>➕ Thêm sinh viên mới</h1>
+                <h1>✏️ Chỉnh sửa sinh viên</h1>
                 <button
                     onClick={() => navigate('/students')}
                     className="btn-back"
@@ -101,20 +155,18 @@ function StudentCreate() {
 
             <form onSubmit={handleSubmit} className="student-form">
                 <div className="form-grid">
-                    {/* Mã sinh viên */}
+                    {/* Mã sinh viên (KHÔNG CHO CHỈNH SỬA) */}
                     <div className="form-group">
-                        <label htmlFor="studentcode">
-                            Mã sinh viên <span className="required">*</span>
-                        </label>
+                        <label htmlFor="studentcode">Mã sinh viên</label>
                         <input
                             type="text"
                             id="studentcode"
                             name="studentcode"
                             value={formData.studentcode}
-                            onChange={handleChange}
-                            placeholder="VD: SV001"
-                            required
+                            disabled
+                            className="input-disabled"
                         />
+                        <small className="form-hint">⚠️ Mã sinh viên không thể thay đổi</small>
                     </div>
 
                     {/* Họ tên */}
@@ -128,7 +180,6 @@ function StudentCreate() {
                             name="fullname"
                             value={formData.fullname}
                             onChange={handleChange}
-                            placeholder="VD: Nguyễn Văn A"
                             required
                         />
                     </div>
@@ -144,7 +195,6 @@ function StudentCreate() {
                             name="email"
                             value={formData.email}
                             onChange={handleChange}
-                            placeholder="VD: student@example.com"
                             required
                         />
                     </div>
@@ -170,7 +220,6 @@ function StudentCreate() {
                             name="phone"
                             value={formData.phone}
                             onChange={handleChange}
-                            placeholder="VD: 0123456789"
                         />
                     </div>
 
@@ -183,7 +232,6 @@ function StudentCreate() {
                             name="classname"
                             value={formData.classname}
                             onChange={handleChange}
-                            placeholder="VD: CNTT K65"
                         />
                     </div>
 
@@ -196,7 +244,6 @@ function StudentCreate() {
                             name="major"
                             value={formData.major}
                             onChange={handleChange}
-                            placeholder="VD: Công nghệ thông tin"
                         />
                     </div>
 
@@ -208,7 +255,6 @@ function StudentCreate() {
                             name="address"
                             value={formData.address}
                             onChange={handleChange}
-                            placeholder="VD: 123 Đường ABC, Quận XYZ, Hà Nội"
                             rows="3"
                         />
                     </div>
@@ -221,7 +267,7 @@ function StudentCreate() {
                         className="btn-submit"
                         disabled={loading}
                     >
-                        {loading ? '⏳ Đang lưu...' : '💾 Lưu'}
+                        {loading ? '⏳ Đang lưu...' : '💾 Cập nhật'}
                     </button>
                     <button
                         type="button"
@@ -237,4 +283,4 @@ function StudentCreate() {
     );
 }
 
-export default StudentCreate;
+export default StudentEdit;

@@ -5,6 +5,7 @@ import com.example.cms_quanlyhethong.repository.RoleRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import com.example.cms_quanlyhethong.dto.request.role.RoleRequest;
 
 import java.util.List;
 
@@ -33,31 +34,31 @@ public class RoleService {
     }
 
     // ========== CREATE ROLE ==========
-    public Role createRole(String name, String description) {
+    public Role createRole(RoleRequest request) {
         // Kiểm tra role đã tồn tại
-        if (roleRepository.existsByName(name)) {
-            throw new RuntimeException("Role already exists: " + name);
+        if (roleRepository.existsByName(request.getName())) {
+            throw new RuntimeException("Role already exists: " + request.getName());
         }
 
         Role role = new Role();
-        role.setName(name);
-        role.setDescription(description);
+        role.setName(request.getName());
+        role.setDescription(request.getDescription());
 
         return roleRepository.save(role);
     }
 
     // ========== UPDATE ROLE ==========
-    public Role updateRole(Long id, String name, String description) {
+    public Role updateRole(Long id, RoleRequest request) {
         Role role = roleRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Role not found with id: " + id));
 
         // Kiểm tra tên mới có trùng với role khác không
-        if (!role.getName().equals(name) && roleRepository.existsByName(name)) {
-            throw new RuntimeException("Role name already exists: " + name);
+        if (!role.getName().equals(request.getName()) && roleRepository.existsByName(request.getName())) {
+            throw new RuntimeException("Role name already exists: " + request.getName());
         }
 
-        role.setName(name);
-        role.setDescription(description);
+        role.setName(request.getName());
+        role.setDescription(request.getDescription());
 
         return roleRepository.save(role);
     }

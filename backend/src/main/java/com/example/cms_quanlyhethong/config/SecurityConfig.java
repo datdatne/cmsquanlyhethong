@@ -3,6 +3,7 @@
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -31,17 +32,28 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .cors(cors -> cors.configurationSource(corsConfigurationSource))
-                .csrf(csrf -> csrf.disable()) // Tắt CSRF
-                .sessionManagement(session -> session .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                // Khong dung Session
+                .csrf(csrf -> csrf.disable())
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
+                        // Public endpoints
                         .requestMatchers("/api/auth/**").permitAll()
-                        .requestMatchers("/api/users/**").hasRole("ADMIN")
-                        .anyRequest().permitAll() // Cho phép tất cả request khác
+
+                        // USER endpoints
+                        .requestMatchers("/api/users/username/{username}").authenticated() // ← CHO PHÉP TẤT CẢ
+                        .requestMatchers("/api/users/**").hasAnyAuthority("ROLE_ADMIN")
+
+                        // STUDENT endpoints
+                        .requestMatchers(HttpMethod.GET, "/api/students", "/api/students/**")
+                        .hasAnyAuthority("ROLE_ADMIN", "ROLE_TEACHER", "ROLE_STUDENT") // ← THÊM ROLE_STUDENT
+                        .requestMatchers(HttpMethod.POST, "/api/students/**").hasAnyAuthority("ROLE_ADMIN")
+                        .requestMatchers(HttpMethod.PUT, "/api/students/**").hasAnyAuthority("ROLE_ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/api/students/**").hasAnyAuthority("ROLE_ADMIN")
+
+                        // Còn lại
+                        .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
-                // cái này nghĩa là filler chạy trước khi chạy Login
-                .httpBasic(basic -> basic.disable()); // ← THÊM DÒNG NÀY: Tắt HTTP Basic Auth
+                .httpBasic(basic -> basic.disable());
 
         return http.build();
     }

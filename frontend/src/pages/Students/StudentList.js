@@ -1,10 +1,12 @@
 // ============================================
 // FILE: frontend/src/pages/Students/StudentList.js
+// MỤC ĐÍCH: Quản lý danh sách sinh viên (CRUD đầy đủ)
 // ============================================
 
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom'; //
+import { useNavigate } from 'react-router-dom';
 import api from '../../services/api';
+import { getCurrentUser } from '../../services/authService';
 import './StudentList.css';
 
 function StudentList() {
@@ -13,39 +15,36 @@ function StudentList() {
     const [students, setStudents] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    const [currentUser, setCurrentUser] = useState(null); // ← State lưu user info
+    const [currentUser, setCurrentUser] = useState(null);
 
-    // Hook để điều hướng
+    // State cho modal xóa
+    const [showDeleteModal, setShowDeleteModal] = useState(false);
+    const [studentToDelete, setStudentToDelete] = useState(null);
+
     const navigate = useNavigate();
 
-    // ===== LẤY THÔNG TIN USER TỪ LOCALSTORAGE =====
+    // ===== LẤY THÔNG TIN USER =====
     useEffect(() => {
-        // Đọc user từ localStorage
-        const userStr = localStorage.getItem('user');
+        const user = getCurrentUser();
 
-        if (userStr) {
-            try {
-                const user = JSON.parse(userStr);
-                setCurrentUser(user);
-                console.log('=== Current User ===', user);
-            } catch (err) {
-                console.error('Lỗi parse user:', err);
-            }
-        } else {
-            // Không có user → chuyển về login
+        if (!user) {
             navigate('/login');
+            return;
         }
-    }, []); // Chỉ chạy 1 lần khi mount
+
+        setCurrentUser(user);
+        console.log('Current user:', user);
+    }, [navigate]);
 
     // ===== KIỂM TRA QUYỀN =====
-    // Hàm kiểm tra user có role cụ thể không
     const hasRole = (roleName) => {
         if (!currentUser || !currentUser.roles) return false;
         return currentUser.roles.includes(roleName);
     };
 
-    // Kiểm tra có phải ADMIN hoặc TEACHER không
-    const isAdminOrTeacher = hasRole('ROLE_ADMIN') || hasRole('ROLE_TEACHER');
+    const isAdmin = hasRole('ROLE_ADMIN');
+    const isTeacher = hasRole('ROLE_TEACHER');
+    const isAdminOrTeacher = isAdmin || isTeacher;
 
     // ===== FETCH STUDENTS =====
     const fetchStudents = async () => {
@@ -54,43 +53,78 @@ function StudentList() {
             setError(null);
 
             const response = await api.get('/students');
-            console.log('=== Dữ liệu sinh viên ===', response.data);
+            console.log('=== API Response ===', response.data);
+
             setStudents(response.data);
 
         } catch (err) {
             console.error('=== Lỗi khi tải sinh viên ===', err);
-
-            if (err.response) {
-                if (err.response.status === 401) {
-                    setError('Token hết hạn! Vui lòng đăng nhập lại.');
-                    // Tự động chuyển về login sau 2 giây
-                    setTimeout(() => navigate('/login'), 2000);
-                } else if (err.response.status === 403) {
-                    setError('Bạn không có quyền xem danh sách sinh viên!');
-                } else {
-                    setError(err.response.data || 'Lỗi khi tải danh sách!');
-                }
-            } else if (err.request) {
-                setError('Không thể kết nối đến server! Vui lòng kiểm tra backend.');
-            } else {
-                setError(err.message);
-            }
+            handleApiError(err);
         } finally {
             setLoading(false);
         }
     };
 
-    // ===== useEffect - GỌI API =====
+    // ===== XỬ LÝ LỖI API =====
+    const handleApiError = (err) => {
+        if (err.response) {
+            if (err.response.status === 401) {
+                setError('Token hết hạn! Vui lòng đăng nhập lại.');
+                setTimeout(() => navigate('/login'), 2000);
+            } else if (err.response.status === 403) {
+                setError('Bạn không có quyền thực hiện thao tác này!');
+            } else {
+                setError(err.response.data || 'Có lỗi xảy ra!');
+            }
+        } else if (err.request) {
+            setError('Không thể kết nối đến server!');
+        } else {
+            setError(err.message);
+        }
+    };
+
+    // ===== XÓA SINH VIÊN =====
+    const handleDelete = async (studentId) => {
+        try {
+            await api.delete(`/students/${studentId}`);
+            alert('✅ Xóa sinh viên thành công!');
+            fetchStudents(); // Reload danh sách
+            setShowDeleteModal(false);
+        } catch (err) {
+            console.error('=== Lỗi khi xóa sinh viên ===', err);
+
+            if (err.response && err.response.data) {
+                alert(`❌ ${err.response.data}`);
+            } else {
+                alert('❌ Không thể xóa sinh viên!');
+            }
+        }
+    };
+
+    // ===== OPEN DELETE MODAL =====
+    const openDeleteModal = (student) => {
+        setStudentToDelete(student);
+        setShowDeleteModal(true);
+    };
+
+    // ===== CLOSE DELETE MODAL =====
+    const closeDeleteModal = () => {
+        setStudentToDelete(null);
+        setShowDeleteModal(false);
+    };
+
+    // ===== LOAD STUDENTS KHI MOUNT =====
     useEffect(() => {
-        // Chỉ gọi API khi đã có currentUser
         if (currentUser) {
             fetchStudents();
         }
-    }, [currentUser]); // ← Dependency: chạy lại khi currentUser thay đổi
+    }, [currentUser]);
 
-    // ===== HANDLER: QUAY LẠI DASHBOARD =====
-    const handleBackToDashboard = () => {
-        navigate('/dashboard');
+    // ===== FORMAT DATE =====
+    const formatDate = (dateString) => {
+        if (!dateString) return '-';
+        const date = new Date(dateString);
+        return date.toLocaleDateString('vi-VN');
     };
 
     // ===== RENDER =====
@@ -98,33 +132,44 @@ function StudentList() {
         <div className="student-list-container">
             {/* Header */}
             <div className="student-list-header">
-                <h1>📚 Danh sách sinh viên</h1>
+                <h1>👨‍🎓 Danh sách sinh viên</h1>
 
-                {/* Button quay lại - CHỈ HIỂN THỊ cho ADMIN/TEACHER */}
-                {isAdminOrTeacher && (
+                <div className="header-actions">
+                    {/* Chỉ ADMIN mới có button tạo mới */}
+                    {isAdmin && (
+                        <button
+                            onClick={() => navigate('/students/create')}
+                            className="btn-primary"
+                        >
+                            ➕ Thêm sinh viên
+                        </button>
+                    )}
+
                     <button
-                        onClick={handleBackToDashboard}
+                        onClick={() => navigate('/dashboard')}
                         className="btn-back"
                     >
-                        ← Quay lại Dashboard
+                        ← Quay lại
                     </button>
-                )}
+                </div>
             </div>
 
             {/* Debug Info */}
             <div className="debug-box">
-                <h4>🔍 Debug Info (xóa khi deploy):</h4>
+                <h4>🔍 Debug Info:</h4>
                 <p>Username: {currentUser?.username || 'N/A'}</p>
                 <p>Roles: {currentUser?.roles?.join(', ') || 'N/A'}</p>
-                <p>Is Admin/Teacher: {isAdminOrTeacher.toString()}</p>
+                <p>Is Admin: {isAdmin.toString()}</p>
+                <p>Is Teacher: {isTeacher.toString()}</p>
                 <p>Loading: {loading.toString()}</p>
                 <p>Error: {error || 'None'}</p>
-                <p>Số lượng sinh viên: {students.length}</p>
+                <p>Số sinh viên: {students.length}</p>
             </div>
 
             {/* LOADING */}
             {loading && (
                 <div className="loading-container">
+                    <div className="loading-spinner"></div>
                     <p>⏳ Đang tải dữ liệu...</p>
                 </div>
             )}
@@ -154,15 +199,18 @@ function StudentList() {
                                     <th>STT</th>
                                     <th>Mã SV</th>
                                     <th>Họ tên</th>
+                                    <th>Ngày sinh</th>
                                     <th>Email</th>
+                                    <th>Điện thoại</th>
                                     <th>Lớp</th>
                                     <th>Ngành</th>
+                                    {isAdmin && <th>Thao tác</th>}
                                 </tr>
                             </thead>
                             <tbody>
                                 {students.length === 0 ? (
                                     <tr>
-                                        <td colSpan="6" className="empty-state">
+                                        <td colSpan={isAdmin ? "9" : "8"} className="empty-state">
                                             📭 Không có sinh viên nào trong hệ thống
                                         </td>
                                     </tr>
@@ -170,11 +218,25 @@ function StudentList() {
                                     students.map((student, index) => (
                                         <tr key={student.id}>
                                             <td>{index + 1}</td>
-                                            <td>{student.studentcode}</td>
+                                            <td><strong>{student.studentcode}</strong></td>
                                             <td>{student.fullname}</td>
+                                            <td>{formatDate(student.dateofbirth)}</td>
                                             <td>{student.email}</td>
+                                            <td>{student.phone || '-'}</td>
                                             <td>{student.classname || '-'}</td>
                                             <td>{student.major || '-'}</td>
+                                            {isAdmin && (
+                                                <td>
+                                                    <div className="action-buttons">
+                                                        <button onClick={() => navigate(`/students/edit/${student.id}`)} className="btn-edit" title="Chỉnh sửa">
+                                                            ✏️
+                                                        </button>
+                                                        <button onClick={() => openDeleteModal(student)} className="btn-delete" title="Xóa">
+                                                            🗑️
+                                                        </button>
+                                                    </div>
+                                                </td>
+                                            )}
                                         </tr>
                                     ))
                                 )}
@@ -182,6 +244,36 @@ function StudentList() {
                         </table>
                     </div>
                 </>
+            )}
+
+            {/* DELETE CONFIRMATION MODAL */}
+            {showDeleteModal && (
+                <div className="modal-overlay" onClick={closeDeleteModal}>
+                    <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+                        <h3>⚠️ Xác nhận xóa sinh viên</h3>
+                        <p>
+                            Bạn có chắc muốn xóa sinh viên{' '}
+                            <strong>{studentToDelete?.fullname}</strong> ({studentToDelete?.studentcode})?
+                        </p>
+                        <p style={{ color: '#dc2626', fontSize: '14px' }}>
+                            ⚠️ Hành động này không thể hoàn tác!
+                        </p>
+                        <div className="modal-actions">
+                            <button
+                                onClick={() => handleDelete(studentToDelete.id)}
+                                className="btn-confirm-delete"
+                            >
+                                Xóa
+                            </button>
+                            <button
+                                onClick={closeDeleteModal}
+                                className="btn-cancel"
+                            >
+                                Hủy
+                            </button>
+                        </div>
+                    </div>
+                </div>
             )}
         </div>
     );

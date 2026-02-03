@@ -4,9 +4,11 @@ import com.example.cms_quanlyhethong.dto.request.user.UserCreateRequest;
 import com.example.cms_quanlyhethong.dto.request.user.UserUpdateRequest;
 import com.example.cms_quanlyhethong.dto.response.user.UserResponse;
 import com.example.cms_quanlyhethong.entity.Role;
+import com.example.cms_quanlyhethong.entity.Student;
 import com.example.cms_quanlyhethong.entity.User;
 import com.example.cms_quanlyhethong.mapper.UserMapper;
 import com.example.cms_quanlyhethong.repository.RoleRepository;
+import com.example.cms_quanlyhethong.repository.StudentRepository;
 import com.example.cms_quanlyhethong.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -25,6 +27,7 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
+    private final StudentRepository studentRepository;  // ← THÊM DÒNG NÀY
     private final UserMapper userMapper;
     private final PasswordEncoder passwordEncoder;
 
@@ -60,7 +63,28 @@ public class UserService {
         // 5. Lưu vào database
         User savedUser = userRepository.save(user);
 
-        // 6. Convert sang DTO và return
+        // ========== 6. TỰ ĐỘNG TẠO STUDENT NẾU CÓ ROLE_STUDENT ==========
+        boolean hasStudentRole = roles.stream()
+                .anyMatch(role -> role.getName().equals("ROLE_STUDENT"));
+
+        if (hasStudentRole) {
+            Student student = new Student();
+
+            // Generate mã sinh viên tự động: SV001, SV002, ...
+            String studentCode = "SV" + String.format("%03d", savedUser.getId());
+
+            student.setStudentCode(studentCode);
+            student.setFullName(savedUser.getFullname());
+            student.setEmail(savedUser.getEmail());
+            student.setUser(savedUser);
+
+            studentRepository.save(student);
+
+            System.out.println("✅ Auto-created Student: " + studentCode + " for User: " + savedUser.getUsername());
+        }
+        // =================================================================
+
+        // 7. Convert sang DTO và return
         return userMapper.toResponse(savedUser);
     }
 
@@ -134,6 +158,24 @@ public class UserService {
                 roles.add(role);
             }
             user.setRoles(roles);
+
+            // ========== TỰ ĐỘNG TẠO STUDENT NẾU THÊM ROLE_STUDENT ==========
+            boolean hasStudentRole = roles.stream()
+                    .anyMatch(role -> role.getName().equals("ROLE_STUDENT"));
+
+            if (hasStudentRole && user.getStudent() == null) {
+                // User có role STUDENT nhưng chưa có Student record
+                Student student = new Student();
+                String studentCode = "SV" + String.format("%03d", user.getId());
+                student.setStudentCode(studentCode);
+                student.setFullName(user.getFullname());
+                student.setEmail(user.getEmail());
+                student.setUser(user);
+                studentRepository.save(student);
+
+                System.out.println("✅ Auto-created Student: " + studentCode + " when updating User: " + user.getUsername());
+            }
+            // ================================================================
         }
 
         // 8. Lưu và return
@@ -145,6 +187,12 @@ public class UserService {
     public void deleteUser(Long id) {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("User not found with id: " + id));
+
+        // Xóa Student trước nếu có (vì có FK constraint)
+        if (user.getStudent() != null) {
+            studentRepository.delete(user.getStudent());
+        }
+
         userRepository.delete(user);
     }
 
@@ -164,6 +212,23 @@ public class UserService {
 
         // 3. Gán roles
         user.setRoles(roles);
+
+        // ========== TỰ ĐỘNG TẠO STUDENT NẾU THÊM ROLE_STUDENT ==========
+        boolean hasStudentRole = roles.stream()
+                .anyMatch(role -> role.getName().equals("ROLE_STUDENT"));
+
+        if (hasStudentRole && user.getStudent() == null) {
+            Student student = new Student();
+            String studentCode = "SV" + String.format("%03d", user.getId());
+            student.setStudentCode(studentCode);
+            student.setFullName(user.getFullname());
+            student.setEmail(user.getEmail());
+            student.setUser(user);
+            studentRepository.save(student);
+
+            System.out.println("✅ Auto-created Student when assigning roles");
+        }
+        // ================================================================
 
         // 4. Lưu và return
         User updatedUser = userRepository.save(user);
