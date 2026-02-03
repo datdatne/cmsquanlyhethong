@@ -38,7 +38,7 @@ public class AuthService {
             throw new RuntimeException("Password không đúng!");
         }
         // kiem tra user co active khong
-        if(!user.isActive()) {
+        if(!user.getIsActive()) {
             throw new RuntimeException("Tai khoan da bi khoa");
         }
         // Convert Entity -> DTO

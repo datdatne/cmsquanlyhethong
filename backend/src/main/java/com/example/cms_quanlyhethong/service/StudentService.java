@@ -112,7 +112,7 @@ public class StudentService {
         user.setEmail(request.getEmail());
         user.setPassword(passwordEncoder.encode("123456")); // mật khẩu mặc định
         user.setFullname(request.getFullname());
-        user.setActive(true);
+        user.setIsActive(true);
         //BƯỚC 4 : Thêm Role vào Student
         Role studentRole = roleRepository.findByName("ROLE_STUDENT")
                 .orElseThrow(() -> new RuntimeException("Role STUDENT không tồn tại"));

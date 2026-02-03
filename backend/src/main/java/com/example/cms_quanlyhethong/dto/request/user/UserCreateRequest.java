@@ -18,7 +18,7 @@ public class UserCreateRequest {
 
     private String fullname;
 
-    private boolean isActive = true;
+    private Boolean isActive = true;
 
     private Set<Long> roleIds;  // Danh sách ID của roles
 }

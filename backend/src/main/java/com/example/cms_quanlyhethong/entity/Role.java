@@ -1,5 +1,6 @@
 package com.example.cms_quanlyhethong.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -26,6 +27,7 @@ public class Role {
  // Quan he Many to Many voi bang User
     @ManyToMany(mappedBy="roles")
     // Dinh nghia ben kia user
+    @JsonIgnore
     private Set<User> user = new HashSet<>();
 
 }

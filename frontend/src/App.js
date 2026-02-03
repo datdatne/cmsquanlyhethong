@@ -2,13 +2,6 @@
 // FILE: App.js
 // MỤC ĐÍCH: Component gốc với Routing
 // ============================================
-//
-// React Router: Thư viện điều hướng giữa các trang
-// - BrowserRouter: Bọc toàn bộ app để enable routing
-// - Routes: Chứa các Route
-// - Route: Định nghĩa đường dẫn → Component
-// - Navigate: Chuyển hướng tự động
-//
 
 import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
@@ -16,9 +9,12 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 // Import các pages
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
+import RoleList from './pages/Roles/RoleList';
 
 import StudentList from './pages/Students/StudentList';
 import UserList from './pages/Users/UserList';
+import UserEdit from './pages/Users/UserEdit';
+import UserCreate from './pages/Users/UserCreate';
 // Import service để check auth
 import { isAuthenticated } from './services/authService';
 
@@ -27,34 +23,20 @@ import './App.css';
 // ============================================
 // PROTECTED ROUTE COMPONENT
 // ============================================
-// Mục đích: Bảo vệ các trang cần đăng nhập
-// Nếu chưa đăng nhập → chuyển về /login
-//
 function ProtectedRoute({ children }) {
-    // Kiểm tra đã đăng nhập chưa
     if (!isAuthenticated()) {
-        // Chưa đăng nhập → redirect về login
         return <Navigate to="/login" replace />;
     }
-
-    // Đã đăng nhập → hiển thị trang con
     return children;
 }
 
 // ============================================
 // PUBLIC ROUTE COMPONENT
 // ============================================
-// Mục đích: Trang công khai (login, register)
-// Nếu đã đăng nhập → chuyển về /dashboard
-//
 function PublicRoute({ children }) {
-    // Kiểm tra đã đăng nhập chưa
     if (isAuthenticated()) {
-        // Đã đăng nhập → redirect về dashboard
         return <Navigate to="/dashboard" replace />;
     }
-
-    // Chưa đăng nhập → hiển thị trang login
     return children;
 }
 
@@ -66,9 +48,10 @@ function App() {
         <BrowserRouter>
             <div className="App">
                 <Routes>
+                    {/* Route mặc định */}
                     <Route
                         path="/"
-                        element={<Navigate to="/login" replace />}
+                        element={<Navigate to="/dashboard" replace />}
                     />
 
                     {/* Trang Login - Public */}
@@ -91,16 +74,17 @@ function App() {
                         }
                     />
 
-                    {/* Các trang khác - sẽ thêm sau */}
+                    {/* Trang Students */}
                     <Route
                         path="/students"
                         element={
                             <ProtectedRoute>
-                                <StudentList /> {/* Tạm thời dùng Dashboard */}
+                                <StudentList />
                             </ProtectedRoute>
                         }
                     />
 
+                    {/* Trang Users */}
                     <Route
                         path="/users"
                         element={
@@ -109,7 +93,34 @@ function App() {
                             </ProtectedRoute>
                         }
                     />
-
+                    //Tạo user
+                    <Route
+                        path="/users/create"
+                        element={
+                            <ProtectedRoute>
+                                <UserCreate />
+                            </ProtectedRoute>
+                        }
+                    />
+                    //Sửa user
+                    <Route
+                        path="/users/edit/:id"
+                        element={
+                            <ProtectedRoute>
+                                <UserEdit />
+                            </ProtectedRoute>
+                        }
+                    />
+                    //Trang roles
+                    <Route
+                        path="/roles"
+                        element={
+                            <ProtectedRoute>
+                                <RoleList />
+                            </ProtectedRoute>
+                        }
+                    />
+                    {/* Trang Profile */}
                     <Route
                         path="/profile"
                         element={

@@ -385,6 +385,23 @@
 .btn-success:hover {
     background: #a7f3d0;      /* Màu đậm hơn chút khi hover */
 }
+
+.btn-danger {
+    padding: 6px 10px;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.2s;
+
+    /* Màu đỏ Pastel (để đồng bộ với style của bạn) */
+    background: #fee2e2;
+    color: #991b1b;           /* Chữ đỏ đậm */
+}
+
+.btn-danger:hover {
+    background: #fecaca;      /* Màu đỏ đậm hơn khi di chuột */
+}
 .btn-cancel {
     flex: 1;
     padding: 12px;

@@ -16,22 +16,20 @@ function UserList() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [currentUser, setCurrentUser] = useState(null);
-    const [searchKeyword, setSearchKeyword] = useState('');
+    const [searchKeyword, setSearchKeyword] = useState(''); // dùng để lấy giá trị trong ô input
 
     // State cho modal
-    const [showDeleteModal, setShowDeleteModal] = useState(false);
-    const [userToDelete, setUserToDelete] = useState(null);
+    const [showDeleteModal, setShowDeleteModal] = useState(false); // điều khiển ui (Hiển thị ra màn hình bạn có muốn xóa ... ko)
+    const [userToDelete, setUserToDelete] = useState(null); // dùng để xóa user
 
     const navigate = useNavigate();
 
     // ===== KIỂM TRA QUYỀN ADMIN =====
     useEffect(() => {
         const userStr = localStorage.getItem('user');
-
         if (userStr) {
             const user = JSON.parse(userStr);
-            setCurrentUser(user);
-
+            setCurrentUser(user); // set để component rende lại để nhận user
             // CHỈ cho ADMIN vào trang này
             if (!user.roles || !user.roles.includes('ROLE_ADMIN')) {
                 alert('⛔ Chỉ ADMIN mới có quyền truy cập trang này!');
@@ -42,13 +40,13 @@ function UserList() {
         }
     }, [navigate]);
 
-    // ===== FETCH USERS =====
+    // ===== Lấy danh sách users từ DB =====
     const fetchUsers = async () => {
         try {
             setLoading(true);
             setError(null);
 
-            const response = await api.get('/users');
+            const response = await api.get('/users'); // if api thành công
             console.log('=== Dữ liệu users ===', response.data);
             setUsers(response.data);
 
@@ -62,19 +60,18 @@ function UserList() {
 
     // ===== TÌM KIẾM USERS =====
     const handleSearch = async (e) => {
-        e.preventDefault();
+        e.preventDefault(); // không cho mặc định mà phải làm theo SPA
 
-        if (!searchKeyword.trim()) {
+        if (!searchKeyword.trim()) { // nếu rỗng thì load lại hàm fetchUsers
             fetchUsers(); // Nếu rỗng → load all
             return;
         }
 
         try {
-            setLoading(true);
-            setError(null);
-
-            const response = await api.get(`/users/search?keyword=${searchKeyword}`);
-            setUsers(response.data);
+            setLoading(true); // bật spinner
+            setError(null); // xóa lỗi
+            const response = await api.get(`/users/search?keyword=${searchKeyword}`); // chờ api của backend
+            setUsers(response.data); // rende để thay đổi lại danh sách user
 
         } catch (err) {
             console.error('=== Lỗi khi tìm kiếm ===', err);
@@ -90,7 +87,8 @@ function UserList() {
             await api.delete(`/users/${userId}`);
             alert('✅ Xóa user thành công!');
             fetchUsers(); // Reload danh sách
-            setShowDeleteModal(false);
+            setShowDeleteModal(false); // nó set nó về false nếu để true người dùng ấn xóa thêm lần nữa
+            // thì nó sẽ gọi lại request mà request không tìm thấy id đâu nên sẽ gây ra lỗi
         } catch (err) {
             console.error('=== Lỗi khi xóa user ===', err);
             handleApiError(err);
@@ -98,35 +96,38 @@ function UserList() {
     };
 
     // ===== KÍCH HOẠT/KHÓA USER =====
-    const handleToggleStatus = async (userId, currentStatus, userRoles) => {
+    const handleToggleStatus = async (userId, currentStatus) => {
 
         const currentUser = getCurrentUser();
 
         if (userId === currentUser.id) {
             alert('⚠️ Bạn không thể thay đổi trạng thái tài khoản của chính mình!');
             return;
+            // giải thích là nếu đăng nhập với id=5 thì không thể tự xóa mình
         }
 
         // ====== BƯỚC 2: Xác nhận hành động ======
          console.log("currentStatus",currentStatus);
-        const action = currentStatus ? 'MỞ KHÓA' : 'KHÓA';
+        const action = currentStatus ? 'KHÓA' : 'MỞ KHÓA';
         console.log("currentStatus",currentStatus);
         console.log("action",action);
         const confirmMessage = `Bạn có chắc muốn ${action} tài khoản này?`;
 
         if (!window.confirm(confirmMessage)) {
-            return;
+            return; // người dùng ấn cancle thì dừng ngay
         }
 
-        // ====== BƯỚC 3: Gọi API ======
-        setLoading(true);
-        try {
 
+        try {
+          // ====== BƯỚC 3: Gọi API ======
+                setLoading(true);
+         // GỌI API PATCH để toggle status
+                await api.patch(`/users/${userId}/toggle-status`);
 
             // ====== BƯỚC 4: Cập nhật UI ======
             setUsers(users.map(user =>
-                user.id === userId
-                    ? { ...user, isActive: !currentStatus }
+                user.id === userId // userId là tham số truyền vào nhờ button , user.id là id thật được map tạo thành mảng
+                    ? { ...user, active: !currentStatus }
                     : user
             ));
 
@@ -299,8 +300,8 @@ function UserList() {
                                                 </div>
                                             </td>
                                             <td>
-                                                <span className={`status-badge ${user.isActive ? 'inactive' :'active' }`}>
-                                                    {user.isActive ? '🔒 Locked' : '✅ Active' }
+                                                <span className={`status-badge ${user.active ? 'active' :'inactive' }`}>
+                                                    {user.active ? '✅ Active' : '🔒 Locked' }
                                                 </span>
                                             </td>
                                             <td>
@@ -316,18 +317,17 @@ function UserList() {
                                                     <button
                                                         onClick={() => handleToggleStatus(
                                                             user.id,
-                                                            user.isActive,
-                                                            user.roles
+                                                            user.active
                                                         )}
-                                                        className={user.isActive ? 'btn-danger' : 'btn-success'}
+                                                        className={user.active ? 'btn-danger' : 'btn-success'}
                                                         disabled={loading || user.id === getCurrentUser().id}
                                                         title={
                                                             user.id === getCurrentUser().id
                                                                 ? 'Không thể tự thay đổi trạng thái'
-                                                                : (user.isActive ? 'Khóa  tài khoản' :'Mở tài khoản' )
+                                                                : (user.active ? 'Khóa  tài khoản' :'Mở tài khoản' )
                                                         }
                                                     >
-                                                        {user.isActive ? '🔒 Mở' : '🔓 Khóa'}
+                                                        {user.active ? '🔓 Khóa' : '🔒 Mở'}
                                                     </button>
                                                     <button
                                                         onClick={() => openDeleteModal(user)}

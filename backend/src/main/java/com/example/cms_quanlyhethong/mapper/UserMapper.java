@@ -22,7 +22,7 @@ public class UserMapper {
                 .username(user.getUsername())
                 .email(user.getEmail())
                 .fullname(user.getFullname())
-                .isActive(user.isActive())
+                .isActive(user.getIsActive())
                 .createdAt(user.getCreatedAt())
                 .updatedAt(user.getUpdatedAt())
                 .roles(user.getRoles().stream()

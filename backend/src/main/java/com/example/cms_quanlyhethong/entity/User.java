@@ -29,7 +29,7 @@ public class User {
     @Column(name = "full_name", length = 100)
     private String fullname;
     @Column(name = "is_active", nullable = false)
-    private boolean isActive=true;
+    private Boolean isActive=true;
     @CreationTimestamp
     @Column(name = "created_at", nullable = false, updatable = false)
     @Temporal(TemporalType.TIMESTAMP)

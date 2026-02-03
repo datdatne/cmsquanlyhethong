@@ -46,7 +46,7 @@ public class UserService {
         user.setPassword(passwordEncoder.encode(request.getPassword())); // Mã hóa password
         user.setEmail(request.getEmail());
         user.setFullname(request.getFullname());
-        user.setActive(request.isActive());
+        user.setIsActive(request.getIsActive() != null ? request.getIsActive() : true);
 
         // 4. Gán roles
         Set<Role> roles = new HashSet<>();
@@ -122,7 +122,7 @@ public class UserService {
 
         // 6. Update isActive (nếu có)
         if (request.getIsActive() != null) {
-            user.setActive(request.getIsActive());
+            user.setIsActive(request.getIsActive());
         }
 
         // 7. Update roles (nếu có)
@@ -195,7 +195,7 @@ public class UserService {
     public UserResponse toggleUserStatus(Long id) {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("User not found with id: " + id));
-        user.setActive(!user.isActive());
+        user.setIsActive(!user.getIsActive());
         User updatedUser = userRepository.save(user);
         return userMapper.toResponse(updatedUser);
     }
